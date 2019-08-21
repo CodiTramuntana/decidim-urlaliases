@@ -16,8 +16,19 @@ module Decidim
 
         validate :source_uniqueness
         validate :destination_uniqueness
+        validates :destination, presence: true, format: { with: Decidim::ParticipatoryProcess.slug_format }
+        validates :destination, exclusion: { in: Decidim::UrlAliases::RESERVED_PATHS, message: "%{value} is reserved." }
 
         alias organization current_organization
+        delegate :host, to: :organization
+
+        def scoped_source
+          host + "/" + source
+        end
+
+        def scoped_destination
+          host + "/" + destination
+        end
 
         private
 

@@ -24,9 +24,9 @@ module Decidim
             RedirectRule,
             form.current_user,
             {
-              source: form.source,
+              source: form.scoped_source,
               source_is_case_sensitive: form.source_is_case_sensitive,
-              destination: form.destination,
+              destination: form.scoped_destination,
               active: form.active,
               organization: form.organization
             },
