@@ -74,7 +74,7 @@ module Decidim
         end
 
         def organization_redirect_rules
-          current_organization.redirect_rules
+          RedirectRule.where(organization: current_organization)
         end
       end
     end

@@ -43,3 +43,4 @@ en:
         create: "%{user_name} created the %{resource_name} with ID %{resource_id}"
         update: "%{user_name} updated the %{resource_name} with ID %{resource_id}"
         delete: "%{user_name} deleted the %{resource_name} with ID %{resource_id}"
+      format_error: "must start with \"/\" and contain only letters and/or numbers"

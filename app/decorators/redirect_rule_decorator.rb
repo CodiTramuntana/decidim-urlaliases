@@ -31,14 +31,14 @@ RedirectRule.class_eval do
 
   private
 
-  # delete this
+  # Only for development
   def organization_host
     "localhost:3000"
   end
 
   # change organization_host to organization.host
   def remove_host(path)
-    path.remove("http://" + organization_host).delete_prefix("/")
+    path.remove("http://" + organization.host).delete_prefix("/")
   end
 
 end

@@ -33,9 +33,9 @@ module Decidim
 
         def attributes
           {
-            source: form.full_source,
+            source: form.source,
             source_is_case_sensitive: form.source_is_case_sensitive,
-            destination: form.full_destination,
+            destination: form.destination,
             active: form.active,
             organization: form.organization
           }
