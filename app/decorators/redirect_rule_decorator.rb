@@ -20,4 +20,25 @@ RedirectRule.class_eval do
       (source_is_regex = :true AND (#{regex_expression})))
     SQL
   end
+
+  def source_only
+    remove_host(source)
+  end
+
+  def destination_only
+    remove_host(destination)
+  end
+
+  private
+
+  # delete this
+  def organization_host
+    "localhost:3000"
+  end
+
+  # change organization_host to organization.host
+  def remove_host(path)
+    path.remove("http://" + organization_host).delete_prefix("/")
+  end
+
 end

@@ -1,12 +1,8 @@
-
-<div class="row">
-  <div id="source" class="columns medium-5">
-    <%= form.text_field :source, placeholder: t(".source_example", host: form.object.host), value: form.object.source_only, data: {required: true} %>
-  </div>
-  <div class="columns 12">
-    <p class="help-text"><%== t(".source_redirection_explanation") %></p>
-  </div>
+<div class="row column">
+  <%= form.text_field :source, placeholder: t(".source_example", host: form.object.host), value: form.object.source_only, data: {required: true} %>
+  <p class="help-text"><%= t(".source_help") %></p>
 </div>
+
 <div class="row column">
   <%= form.check_box :source_is_case_sensitive, checked: form.object.source_is_case_sensitive? %>
 </div>

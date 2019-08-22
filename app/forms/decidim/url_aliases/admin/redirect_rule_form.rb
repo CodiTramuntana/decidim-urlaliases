@@ -13,21 +13,15 @@ module Decidim
         attribute :organization, Decidim::Organization
 
         validates :organization, presence: true
-        validates :source, presence: true
-        validates :destination, presence: true, format: { with: Decidim::ParticipatoryProcess.slug_format }
+        validates :destination, presence: true
+        validates :source, presence: true, format: { with: Decidim::ParticipatoryProcess.slug_format }
 
         validate :source_uniqueness
+        validate :source_must_not_be_reserved
         validate :destination_uniqueness
-        validate :source_must_be_recognized
-        validate :destination_must_not_be_reserved
-        # validate :host_must_be_valid
-
-        def before_validation
-          # self.prepend_host
-        end
+        validate :destination_must_be_recognized
 
         alias organization current_organization
-        delegate :host, to: :organization
 
         def source_only
           remove_host(source)
@@ -43,6 +37,16 @@ module Decidim
 
         def full_destination
           add_host(destination)
+        end
+
+        # delete this
+        def organization_host
+          "localhost:3000"
+        end
+
+        # change organization_host to organization.host
+        def host
+          "http://#{organization_host}"
         end
 
         private
@@ -65,30 +69,30 @@ module Decidim
           @route_recognizer ||= Decidim::UrlAliases::RouteRecognizer.new
         end
 
-        def source_must_be_recognized
-          return if route_recognizer.find_path("/" + source)
+        def source_must_not_be_reserved
+          return unless source.in?(reserved_paths)
 
-          errors.add(:source, :not_recognized)
+          errors.add(:source, :reserved)
         end
 
-        def destination_must_not_be_reserved
-          return unless destination.in?(reserved_paths)
+        def destination_must_be_recognized
+          return if route_recognizer.find_path("/" + destination)
 
-          errors.add(:destination, :reserved)
+          errors.add(:destination, :not_recognized)
         end
 
         def organization_redirect_rules
-          RedirectRule.where(organization: organization).where.not(id: id)
+          organization.redirect_rules.where.not(id: id)
         end
 
         def source_uniqueness
-          return unless organization_redirect_rules.where(source: source).any?
+          return unless organization_redirect_rules.where(source: full_source).any?
 
           errors.add(:source, :taken)
         end
 
         def destination_uniqueness
-          return unless organization_redirect_rules.where(destination: destination).any?
+          return unless organization_redirect_rules.where(destination: full_destination).any?
 
           errors.add(:destination, :taken)
         end

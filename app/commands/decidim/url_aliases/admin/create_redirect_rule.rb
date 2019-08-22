@@ -15,7 +15,6 @@ module Decidim
 
           broadcast(:ok)
         rescue ActiveRecord::RecordInvalid
-          form.errors.messages.merge(@redirect_rule.errors.messages)
           broadcast(:invalid)
         end
 
@@ -24,7 +23,7 @@ module Decidim
         attr_reader :form
 
         def create_redirect_rule
-          @redirect_rule = Decidim.traceability.create!(
+          Decidim.traceability.create!(
             RedirectRule,
             form.current_user,
             {

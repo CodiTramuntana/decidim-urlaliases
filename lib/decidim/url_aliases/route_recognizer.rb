@@ -15,7 +15,7 @@ module Decidim
           manifest_names = manifests.map(&:name).map(&:to_s)
           index_routes = routes.select { |route| route.name.in?(manifest_names) }
           index_paths = index_routes.map { |route| route.path.spec.to_s }
-          index_paths.map { |path| path.delete("/").remove("(.:format)") }
+          index_paths.map { |path| path.delete_prefix("/").remove("(.:format)") }
         end
       end
 

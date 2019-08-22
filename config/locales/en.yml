@@ -23,8 +23,9 @@ en:
             title: Edit redirect rule
             update: Update
           form:
-            source_example: "http://%{host}/processes/process_slug"
-            destination_example: "http://%{host}/new_slug"
+            destination_example: "http://%{host}/processes/process_slug"
+            source_example: "http://%{host}/new_slug"
+            source_help: 'Only accepts letters, numbers and dashes, and must start with a letter.'
             source_redirection_explanation: "Instructions: <br/>
                                              The URL input should always be http, even if anyone wanted to redirect an https url on input. Once the server receives the page request, it changes to the http protocol.<br />
                                              If the url you want to redirect is exlusivamente the root, this has to end with a slash <strong> / </strong>. Example: http://www.example.org/

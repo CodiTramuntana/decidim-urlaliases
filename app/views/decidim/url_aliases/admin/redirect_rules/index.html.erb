@@ -25,8 +25,8 @@
           <% @redirect_rules.each do |redirect_rule| %>
             <tr id="redirect-rule-<%= redirect_rule.id %>">
               <td><%= redirect_rule.id %></td>
-              <td><%= redirect_rule.source %></td>
-              <td><%= redirect_rule.destination %></td>
+              <td><%= redirect_rule.source_only %></td>
+              <td><%= redirect_rule.destination_only %></td>
               <td><%= redirect_rule.source_is_case_sensitive? ? "yes" : "no" %></td>
               <td><%= redirect_rule.active? ? "yes" : "no" %></td>
               <td class="table-list__actions">
