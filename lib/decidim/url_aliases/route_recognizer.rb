@@ -2,13 +2,14 @@
 
 module Decidim
   module UrlAliases
+    # https://gist.github.com/bantic/5688232
     class RouteRecognizer
-      # https://gist.github.com/bantic/5688232
-
-      def find(string_path)
+      # Checks if the string_path matches any path.
+      def find_path(string_path)
         paths.any? { |path| path.match(string_path) }
       end
 
+      # Return an Array[String].
       def index_paths
         @index_paths ||= begin
           manifest_names = manifests.map(&:name).map(&:to_s)
@@ -18,20 +19,19 @@ module Decidim
         end
       end
 
-      private
-
+      # Returns an Array[ParticipatorySpaceManifest].
       def manifests
         Decidim.participatory_space_manifests
       end
 
-      # Return an Array of ActionDispatch::Journey::Path::Pattern
+      # Return an Array[ActionDispatch::Journey::Path::Pattern].
       def paths
         @paths ||= routes.map(&:path)
       end
 
-      # Return an Array of ActionDispatch::Journey::Routes
+      # Return an Array[ActionDispatch::Journey::Route].
       def routes
-        manifests.map do |manifest|
+        @routes ||= manifests.map do |manifest|
           engine = manifest.context.engine
           engine.routes.routes
         end.map(&:routes).flatten

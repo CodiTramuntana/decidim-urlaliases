@@ -24,7 +24,7 @@ en:
             update: Update
           form:
             source_example: "http://%{host}/processes/process_slug"
-            destination_example: "http://%{host}/processes/process_slug"
+            destination_example: "http://%{host}/new_slug"
             source_redirection_explanation: "Instructions: <br/>
                                              The URL input should always be http, even if anyone wanted to redirect an https url on input. Once the server receives the page request, it changes to the http protocol.<br />
                                              If the url you want to redirect is exlusivamente the root, this has to end with a slash <strong> / </strong>. Example: http://www.example.org/
@@ -38,3 +38,7 @@ en:
             success: Redirect Rule updated successfully
         titles:
           redirect_rules: Redirect rules
+      admin_log:
+        create: "%{user_name} created the %{resource_name} with ID %{resource_id}"
+        update: "%{user_name} updated the %{resource_name} with ID %{resource_id}"
+        delete: "%{user_name} deleted the %{resource_name} with ID %{resource_id}"
