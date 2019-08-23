@@ -36,8 +36,7 @@ module Decidim
             source: form.source,
             source_is_case_sensitive: form.source_is_case_sensitive,
             destination: form.destination,
-            active: form.active,
-            organization: form.organization
+            active: form.active
           }
         end
       end

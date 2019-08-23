@@ -1,33 +1,45 @@
-require 'spec_helper'
+# frozen_string_literal: true
+
+require "spec_helper"
 
 describe RedirectRule do
   subject { rule }
 
-  let(:rule) { create(:redirect_rule, organization: organization) }
   let(:organization) { create(:organization) }
+  let(:rule) { create(:redirect_rule, organization: organization) }
+  let(:other_rule) { create(:redirect_rule, organization: organization) }
 
   it { is_expected.to be_valid }
 
-  it "belongs to a organization" do
-    expect(RedirectRule.reflect_on_association(:organization).macro).to eq(:belongs_to)
-  end
-
   describe "validations" do
-    context "with organization" do
-      it { is_expected.to be_valid }
-    end
-
     context "without organization" do
       before { rule.organization = nil }
 
       it { is_expected.to be_invalid }
     end
-  end
 
-  describe "#source_only" do
+    context "without source" do
+      before { rule.source = nil }
 
-  end
+      it { is_expected.to be_invalid }
+    end
 
-  describe "#destination_only" do
+    context "without unique source in organization" do
+      before { rule.source = other_rule.source }
+
+      it { is_expected.to be_invalid }
+    end
+
+    context "without destination" do
+      before { rule.destination = nil }
+
+      it { is_expected.to be_invalid }
+    end
+
+    context "without unique destination in organization" do
+      before { rule.destination = other_rule.destination }
+
+      it { is_expected.to be_invalid }
+    end
   end
 end

@@ -10,21 +10,16 @@ module Decidim
         attribute :source_is_case_sensitive, Boolean
         attribute :destination, String
         attribute :active, Boolean
-        attribute :organization, Decidim::Organization
 
-        validates :organization, presence: true
-        validates :destination, presence: true
-        validates :source,
-                  presence: true,
-                  format: { with: RouteRecognizer::VALID_SOURCE_REGEX,
-                            message: I18n.t("decidim.url_aliases.format_error") }
-
+        validates_presence_of :source, :destination
+        validates :source, format: {
+          with: RouteRecognizer::VALID_SOURCE_REGEX,
+          message: I18n.t("decidim.url_aliases.format_error")
+        }
         validate :source_uniqueness
         validate :source_must_not_be_reserved
         validate :destination_uniqueness
         validate :destination_must_be_recognized
-
-        alias organization current_organization
 
         private
 
