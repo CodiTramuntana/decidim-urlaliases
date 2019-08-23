@@ -33,9 +33,11 @@ en:
             update: Update
           form:
             destination_example: "/processes/process_slug"
+            destination_help: The path that you want users to be redirected to. Only
+              accepts paths that are recognizable by the application.
             source_example: "/new_slug"
-            source_help: 'The path that you want users to type. Only accepts letters, numbers and dashes, and must start with a "/".'
-            destination_help: 'The path that you want users to be redirected to. Only accepts paths that are recognizable by the application.'
+            source_help: The path that you want users to type. Only accepts letters,
+              numbers and dashes, and must start with a "/".
           new:
             create: Create
             title: New redirect rule
@@ -47,6 +49,6 @@ en:
           redirect_rules: Redirect rules
       admin_log:
         create: "%{user_name} created a %{resource_name} with ID %{resource_id}"
-        update: "%{user_name} updated a %{resource_name} with ID %{resource_id}"
         delete: "%{user_name} deleted a %{resource_name} with ID %{resource_id}"
-      format_error: "must start with \"/\" and contain only letters, numbers and/or dashes"
+        update: "%{user_name} updated a %{resource_name} with ID %{resource_id}"
+      format_error: must start with "/" and contain only letters, numbers and/or dashes

@@ -2,11 +2,22 @@
 
 module Decidim
   module UrlAliases
-    # https://gist.github.com/bantic/5688232
     class RouteRecognizer
-      # Checks if the string_path matches any path.
-      def find_path(string_path)
-        paths.any? { |path| path.match(string_path) }
+      VALID_SOURCE_REGEX = /\/[a-zA-Z0-9\-]+\z/
+      RESERVED_PATHS = %w(/admin /api /system).freeze
+
+      def match_path(request_path)
+        paths.any? { |path| path.match(request_path) }
+      end
+
+      def reserved_path?(request_path)
+        reserved_paths.include?(request_path)
+      end
+
+      private
+
+      def reserved_paths
+        RESERVED_PATHS + index_paths
       end
 
       # Return an Array[String].

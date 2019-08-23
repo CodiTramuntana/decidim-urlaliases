@@ -26,18 +26,18 @@ module Decidim
           Decidim.traceability.create!(
             RedirectRule,
             form.current_user,
-            {
-              source: form.source,
-              source_is_case_sensitive: form.source_is_case_sensitive,
-              destination: form.destination,
-              active: form.active,
-              organization: form.organization
-            },
-            extra: {
-              source: form.source,
-              destination: form.destination
-            }
+            attributes
           )
+        end
+
+        def attributes
+          {
+            source: form.source,
+            source_is_case_sensitive: form.source_is_case_sensitive,
+            destination: form.destination,
+            active: form.active,
+            organization: form.organization
+          }
         end
       end
     end

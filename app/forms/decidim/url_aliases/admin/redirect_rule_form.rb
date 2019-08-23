@@ -15,8 +15,9 @@ module Decidim
         validates :organization, presence: true
         validates :destination, presence: true
         validates :source,
-        presence: true,
-        format: { with: /\/[a-zA-Z0-9\-]+\z/, message: I18n.t("decidim.url_aliases.format_error") }
+                  presence: true,
+                  format: { with: RouteRecognizer::VALID_SOURCE_REGEX,
+                            message: I18n.t("decidim.url_aliases.format_error") }
 
         validate :source_uniqueness
         validate :source_must_not_be_reserved
@@ -24,32 +25,27 @@ module Decidim
         validate :destination_must_be_recognized
 
         alias organization current_organization
-        delegate :host, to: :organization
 
         private
 
-        def reserved_paths
-          Decidim::UrlAliases::RESERVED_PATHS + route_recognizer.index_paths
-        end
-
         def route_recognizer
-          @route_recognizer ||= Decidim::UrlAliases::RouteRecognizer.new
+          @route_recognizer ||= RouteRecognizer.new
         end
 
         def source_must_not_be_reserved
-          return unless source.in?(reserved_paths)
+          return unless route_recognizer.reserved_path?(source)
 
           errors.add(:source, :reserved)
         end
 
         def destination_must_be_recognized
-          return if route_recognizer.find_path(destination)
+          return if route_recognizer.match_path(destination)
 
           errors.add(:destination, :not_recognized)
         end
 
         def organization_redirect_rules
-          RedirectRule.where(organization: organization).where.not(id: id)
+          RedirectRule.where(organization: current_organization).where.not(id: id)
         end
 
         def source_uniqueness

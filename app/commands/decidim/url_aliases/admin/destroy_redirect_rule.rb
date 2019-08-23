@@ -11,7 +11,10 @@ module Decidim
 
         def call
           destroy_redirect_rule
+
           broadcast(:ok)
+        rescue ActiveRecord::RecordNotDestroyed
+          broadcast(:invalid)
         end
 
         private

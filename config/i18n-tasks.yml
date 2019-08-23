@@ -6,3 +6,4 @@ locales: [en, fr]
 ignore_missing:
 
 ignore_unused:
+  - "activemodel.errors.models.redirect_rule.attributes.*"

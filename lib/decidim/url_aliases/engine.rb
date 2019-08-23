@@ -10,8 +10,9 @@ module Decidim
       isolate_namespace Decidim::UrlAliases
 
       initializer "decidim_url_aliases.assets" do |app|
-        app.config.assets.precompile += %w(decidim_url_aliases_manifest.js)
+        app.config.assets.precompile += %w(decidim_url_aliases_manifest.css)
       end
+
       # make decorators autoload in development env
       config.autoload_paths << File.join(
         Decidim::UrlAliases::Engine.root, "app", "decorators", "{**}"
