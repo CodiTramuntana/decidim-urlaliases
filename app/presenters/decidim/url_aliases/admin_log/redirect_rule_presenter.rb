@@ -3,16 +3,11 @@
 module Decidim
   module UrlAliases
     module AdminLog
-      # This class holds the logic to present a `Decidim::ParticipatoryProcess`
-      # for the `AdminLog` log.
-      #
-      # Usage should be automatic and you shouldn't need to call this class
-      # directly, but here's an example:
-      #
-      #    action_log = Decidim::ActionLog.last
-      #    view_helpers # => this comes from the views
-      #    ParticipatoryProcessPresenter.new(action_log, view_helpers).present
+      # This class holds the logic to present a `RedirectRule` for the `AdminLog` log.
       class RedirectRulePresenter < Decidim::Log::BasePresenter
+        delegate :resource, :resource_id, to: :action_log
+        delegate :url_helpers, to: "Decidim::UrlAliases::AdminEngine.routes"
+
         private
 
         def diff_fields_mapping
@@ -42,33 +37,27 @@ module Decidim
           {
             user_name: user_presenter.present,
             resource_name: present_resource,
-            resource_id: action_log.resource_id
+            resource_id: resource_id
           }
         end
 
-        def resource
-          action_log.resource
-        end
-
-        # Private: Presents the resource of the action. If the resource and the
-        # space are found in the database, it links to it. Otherwise it only
-        # shows the resource name.
+        # Private: Presents the resource of the action. If the resource is found
+        # in the database, it links to it. Otherwise it only shows the resource name.
         #
         # Returns an HTML-safe String.
         def present_resource
-          if resource.blank?
-            h.content_tag(:span, resource_name, class: "logs__log__resource")
-          else
+          if resource
             h.link_to(resource_name, resource_path, class: "logs__log__resource")
+          else
+            h.content_tag(:span, resource_name, class: "logs__log__resource")
           end
         end
 
         # Private: Finds the public link for the given resource.
         #
-        # Returns an HTML-safe String. If the resource space is not
-        # present, it returns `nil`.
+        # Returns an HTML-safe String.
         def resource_path
-          Decidim::UrlAliases::AdminEngine.routes.url_helpers.redirect_rules_path(anchor: "redirect-rule-#{resource.id}")
+          url_helpers.redirect_rules_path(anchor: "redirect-rule-#{resource_id}")
         end
 
         # Private: Presents resource name.

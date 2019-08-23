@@ -9,8 +9,9 @@
 
 <div class="row column">
   <%= form.text_field :destination, placeholder: t(".destination_example", host: form.object.host), data: {required: true} %>
+  <p class="help-text"><%= t(".destination_help") %></p>
 </div>
 
 <div class="row column">
-    <%= form.check_box :active %>
+  <%= form.check_box :active %>
 </div>
