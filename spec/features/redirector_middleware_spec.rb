@@ -8,7 +8,7 @@ describe "Redirector middleware", type: :feature do
 
   before { Capybara.app_host = "http://#{host}" }
 
-  context "when the Redirector's request_host is the same as a rule's organization's host" do
+  context "when the request_host is an organization's host" do
     let(:host) { rule.organization.host }
 
     it "redirects the visitor for a rule of the same organization" do
@@ -17,7 +17,7 @@ describe "Redirector middleware", type: :feature do
     end
 
     it "does NOT redirect the visitor for a rule of OTHER organization" do
-      expect { visit other_rule.source }.to raise_error(ActionController::RoutingError)
+      expect { visit other_rule.source }.to raise_error(ActionController::RoutingError, /#{other_rule.source}/)
     end
   end
 end

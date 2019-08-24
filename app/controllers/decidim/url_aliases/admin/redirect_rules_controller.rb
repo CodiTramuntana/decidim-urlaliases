@@ -68,6 +68,11 @@ module Decidim
               flash[:notice] = I18n.t("redirect_rules.destroy.success", scope: "decidim.url_aliases.admin")
               redirect_to redirect_rules_path
             end
+
+            on(:invalid) do
+              flash[:alert] = I18n.t("redirect_rules.destroy.error", scope: "decidim.url_aliases.admin")
+              redirect_to :index
+            end
           end
         end
 

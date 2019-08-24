@@ -23,7 +23,7 @@ module Decidim
 
         def destroy_redirect_rule
           Decidim.traceability.perform_action!(
-            "delete",
+            :delete,
             @redirect_rule,
             current_user
           ) do
