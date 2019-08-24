@@ -3,10 +3,10 @@
 module Decidim
   module UrlAliases
     class RouteRecognizer
-      VALID_SOURCE_REGEX = /\/[a-zA-Z0-9\-]+\z/
+      VALID_SOURCE_REGEX = %r{/[0-9a-zA-Z_\-]+\z}
       RESERVED_PATHS = %w(/admin /api /system).freeze
 
-      def match_path(request_path)
+      def matching_path?(request_path)
         paths.any? { |path| path.match(request_path) }
       end
 

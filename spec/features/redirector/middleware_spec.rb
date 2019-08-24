@@ -8,7 +8,7 @@ describe "Redirector middleware", type: :feature do
 
   before { Capybara.app_host = "http://#{host}" }
 
-  context "when the request_host is an organization's host" do
+  context "when the request_host matches an organization's host" do
     let(:host) { rule.organization.host }
 
     it "redirects the visitor for a rule of the same organization" do

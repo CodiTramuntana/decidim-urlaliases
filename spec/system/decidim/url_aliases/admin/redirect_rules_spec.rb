@@ -101,9 +101,9 @@ describe "Redirect rules", type: :system do
       within "form.edit_redirect_rule" do
         expect(page).to have_content("EDIT REDIRECT RULE")
         expect(page).to have_field("Source", with: rule.source)
-        expect(page).to have_field("Source is case sensitive", checked: false)
+        expect(page).to have_field("Source is case sensitive", checked: rule.source_is_case_sensitive)
         expect(page).to have_field("Destination", with: rule.destination)
-        expect(page).to have_field("Active", checked: true)
+        expect(page).to have_field("Active", checked: rule.active)
         expect(page).to have_button("Update")
       end
     end
@@ -117,7 +117,7 @@ describe "Redirect rules", type: :system do
       it "does not update a redirect rule" do
         expect(page).to have_css(".callout.alert", text: "error")
         within "form.edit_redirect_rule" do
-          expect(page).to have_css(".form-error", text: "must start with \"/\" and contain only letters, numbers and/or dashes.")
+          expect(page).to have_css(".form-error", text: "must start with \"/\" and contain only letters, numbers, dashes and/or underscores.")
         end
       end
     end
@@ -137,11 +137,11 @@ describe "Redirect rules", type: :system do
   context "when deleting a redirect rule" do
     before { click_link("Delete") }
 
-    it "is shown the  confirm alert" do
+    it "is shown the confirm alert" do
       expect(accept_alert).to eq("Confirm delete")
     end
 
-    it "is deletes the redirect rule" do
+    it "deletes the redirect rule" do
       page.driver.browser.switch_to.alert.accept
       expect(page).to have_css(".callout.success", text: "successfully")
     end

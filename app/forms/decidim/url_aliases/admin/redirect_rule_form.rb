@@ -34,7 +34,7 @@ module Decidim
         end
 
         def destination_must_be_recognized
-          return if route_recognizer.match_path(destination)
+          return if route_recognizer.matching_path?(destination)
 
           errors.add(:destination, :not_recognized)
         end

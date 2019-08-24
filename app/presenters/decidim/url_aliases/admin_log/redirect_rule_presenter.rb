@@ -5,16 +5,16 @@ module Decidim
     module AdminLog
       # This class holds the logic to present a `RedirectRule` for the `AdminLog` log.
       class RedirectRulePresenter < Decidim::Log::BasePresenter
+        private
+
         delegate :resource, :resource_id, to: :action_log
         delegate :url_helpers, to: "Decidim::UrlAliases::AdminEngine.routes"
-
-        private
 
         def diff_fields_mapping
           {
             source: :string,
-            destination: :string,
             source_is_case_sensitive: :boolean,
+            destination: :string,
             active: :boolean
           }
         end

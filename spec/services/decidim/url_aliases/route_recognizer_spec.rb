@@ -6,8 +6,8 @@ describe Decidim::UrlAliases::RouteRecognizer do
   let(:route_recognizer) { described_class.new }
   let(:rule) { create(:redirect_rule) }
 
-  describe "#match_path" do
-    subject { route_recognizer.match_path(request_path) }
+  describe "#matching_path?" do
+    subject { route_recognizer.matching_path?(request_path) }
 
     context "when the request_path is a valid decidim path" do
       let(:request_path) { rule.destination }

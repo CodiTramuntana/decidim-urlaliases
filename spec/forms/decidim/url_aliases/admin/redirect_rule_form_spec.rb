@@ -6,7 +6,7 @@ describe Decidim::UrlAliases::Admin::RedirectRuleForm do
   subject { described_class.from_params(params).with_context(current_organization: rule.organization) }
 
   let(:rule) { create(:redirect_rule) }
-  let(:source) { "/my-custom-url"}
+  let(:source) { "/my-custom-url" }
   let(:destination) { "/processes/slug" }
   let(:params) do
     {
@@ -14,7 +14,7 @@ describe Decidim::UrlAliases::Admin::RedirectRuleForm do
         "source" => source,
         "source_is_case_sensitive" => false,
         "destination" => destination,
-        "active" => true,
+        "active" => true
       }
     }
   end
