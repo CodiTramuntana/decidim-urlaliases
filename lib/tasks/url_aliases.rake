@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 namespace :url_aliases do
-  task init: ["install:migrations", "generate:default_reserved_paths"]
+  task init: ["install:migrations", "generate:reserved_paths"]
 
   namespace :install do
     desc "Install and run migrations"
@@ -14,7 +14,7 @@ namespace :url_aliases do
 
   namespace :generate do
     desc "Generates a YAML file with the reserved paths"
-    task default_reserved_paths: :environment do
+    task reserved_paths: :environment do
       recognizer = Decidim::UrlAliases::RouteRecognizer.new
       recognizer.reserved_path?("")
 
